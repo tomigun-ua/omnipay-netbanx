@@ -1,7 +1,7 @@
 {
-    "name": "omnipay/netbanx",
+    "name": "tomigunUA/omnipay-netbanx",
     "type": "library",
-    "description": "NetBanx driver for the Omnipay payment processing library",
+    "description": "NetBanx driver for the Omnipay 3.0 payment processing library",
     "keywords": [
         "gateway",
         "merchant",
