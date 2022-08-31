@@ -114,9 +114,17 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data)->send();
+        $headers = $this->getHeaders();
 
-        return $this->response = new Response($this, $httpResponse->getBody());
+        $body = $data ? http_build_query($data, '', '&') : null;
+        $httpResponse = $this->httpClient->request(
+            $this->getHttpMethod(),
+            $this->getEndpoint(),
+            $headers,
+            $body
+        );
+
+        return $this->createResponse($httpResponse->getBody()->getContents(), $httpResponse->getHeaders());
     }
 
     /**
@@ -129,6 +137,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getEndpoint()
     {
         return $this->getTestMode() ? $this->developerEndpoint : $this->liveEndpoint;
+    }
+
+    public function getHeaders(): array
+    {
+        return [];
+    }
+
+    public function getHttpMethod(): string
+    {
+        return 'POST';
     }
 
     /**
@@ -147,7 +165,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * Translate card type to internal NetBanx format
      *
-     * @param  string $brand
+     * @param string $brand
      * @return string
      */
     protected function translateCardType($brand)
