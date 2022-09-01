@@ -33,8 +33,9 @@ class FetchTransactionRequest extends AbstractRequest
      * Get XML string
      *
      * @return string
+     * @throws \Exception
      */
-    protected function getXmlString()
+    protected function getXmlString(): string
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>
                 <ccTxnLookupRequestV1
@@ -95,9 +96,19 @@ class FetchTransactionRequest extends AbstractRequest
         $dateElement->addChild('second', $second);
     }
 
+    private function setStartYear($value)
+    {
+        return $this->setParameter('startYear', $value);
+    }
+
     private function getStartYear()
     {
         return $this->getParameter('startYear');
+    }
+
+    private function setStartMonth($value)
+    {
+        return $this->setParameter('startMonth', $value);
     }
 
     private function getStartMonth()
@@ -105,9 +116,19 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('startMonth');
     }
 
+    private function setStartDay($value)
+    {
+        return $this->setParameter('startDay', $value);
+    }
+
     private function getStartDay()
     {
         return $this->getParameter('startDay');
+    }
+
+    private function setEndYear($value)
+    {
+        return $this->setParameter('endYear', $value);
     }
 
     private function getEndYear()
@@ -115,9 +136,19 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('endYear');
     }
 
+    private function setEndMonth($value)
+    {
+        return $this->setParameter('endMonth', $value);
+    }
+
     private function getEndMonth()
     {
         return $this->getParameter('endMonth');
+    }
+
+    private function setEndDay($value)
+    {
+        return $this->setParameter('endDay', $value);
     }
 
     private function getEndDay()
