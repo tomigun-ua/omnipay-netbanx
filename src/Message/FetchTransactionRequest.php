@@ -96,7 +96,7 @@ class FetchTransactionRequest extends AbstractRequest
         $dateElement->addChild('second', $second);
     }
 
-    private function setStartYear($value)
+    public function setStartYear($value)
     {
         return $this->setParameter('startYear', $value);
     }
@@ -106,7 +106,7 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('startYear');
     }
 
-    private function setStartMonth($value)
+    public function setStartMonth($value)
     {
         return $this->setParameter('startMonth', $value);
     }
@@ -116,7 +116,7 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('startMonth');
     }
 
-    private function setStartDay($value)
+    public function setStartDay($value)
     {
         return $this->setParameter('startDay', $value);
     }
@@ -126,7 +126,7 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('startDay');
     }
 
-    private function setEndYear($value)
+    public function setEndYear($value)
     {
         return $this->setParameter('endYear', $value);
     }
@@ -136,7 +136,7 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('endYear');
     }
 
-    private function setEndMonth($value)
+    public function setEndMonth($value)
     {
         return $this->setParameter('endMonth', $value);
     }
@@ -146,7 +146,7 @@ class FetchTransactionRequest extends AbstractRequest
         return $this->getParameter('endMonth');
     }
 
-    private function setEndDay($value)
+    public function setEndDay($value)
     {
         return $this->setParameter('endDay', $value);
     }
