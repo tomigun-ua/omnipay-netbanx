@@ -12,7 +12,7 @@ class FetchTransactionRequest extends AbstractRequest
      *
      * @var string
      */
-    protected $txnMode = 'cTxnLookup';
+    protected $txnMode = 'ccTxnLookup';
 
     /**
      * Get data
