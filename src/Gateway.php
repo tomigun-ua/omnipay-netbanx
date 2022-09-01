@@ -41,7 +41,7 @@ class Gateway extends AbstractGateway
     /**
      * Authorize a new amount
      *
-     * @param  array $parameters
+     * @param array $parameters
      * @return mixed
      */
     public function authorize(array $parameters = array())
@@ -52,7 +52,7 @@ class Gateway extends AbstractGateway
     /**
      * Capture authorized amount
      *
-     * @param  array                      $parameters An array of options
+     * @param array $parameters An array of options
      * @return \Omnipay\ResponseInterface
      */
     public function capture(array $parameters = array())
@@ -74,7 +74,7 @@ class Gateway extends AbstractGateway
     /**
      * Void transaction
      *
-     * @param  array                      $parameters An array of options
+     * @param array $parameters An array of options
      * @return \Omnipay\ResponseInterface
      */
     public function void(array $parameters = array())
@@ -85,7 +85,7 @@ class Gateway extends AbstractGateway
     /**
      * Create card
      *
-     * @param  array $parameters
+     * @param array $parameters
      * @return mixed
      */
     public function createCard(array $parameters = array())
@@ -93,6 +93,17 @@ class Gateway extends AbstractGateway
         $parameters['amount'] = self::CREATE_CARD_AMOUNT;
 
         return $this->createRequest('\Omnipay\NetBanx\Message\AuthorizeRequest', $parameters);
+    }
+
+    /**
+     * Information Lookup
+     *
+     * @param array $parameters
+     * @return mixed
+     */
+    public function fetchTransaction(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\NetBanx\Message\FetchTransactionRequest', $parameters);
     }
 
     /**
