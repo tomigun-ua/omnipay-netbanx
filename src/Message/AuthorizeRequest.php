@@ -99,7 +99,11 @@ class AuthorizeRequest extends AbstractRequest
             $billingDetails->addChild('street', $card->getBillingAddress1());
             $billingDetails->addChild('street2', $card->getBillingAddress2());
             $billingDetails->addChild('city', $card->getBillingCity());
-            $billingDetails->addChild('state', $card->getBillingState());
+            if (!$this->needState()) {
+                $billingDetails->addChild('state', $card->getBillingState());
+            } else {
+                $billingDetails->addChild('region', $card->getBillingState());
+            }
             $billingDetails->addChild('country', $card->getBillingCountry());
             $billingDetails->addChild('zip', $card->getBillingPostcode());
             $billingDetails->addChild('phone', $card->getBillingPhone());
@@ -112,7 +116,11 @@ class AuthorizeRequest extends AbstractRequest
             $shippingDetails->addChild('street', $card->getShippingAddress1());
             $shippingDetails->addChild('street2', $card->getShippingAddress2());
             $shippingDetails->addChild('city', $card->getShippingCity());
-            $shippingDetails->addChild('state', $card->getShippingState());
+            if (!$this->needState()) {
+                $shippingDetails->addChild('state', $card->getBillingState());
+            } else {
+                $shippingDetails->addChild('region', $card->getBillingState());
+            }
             $shippingDetails->addChild('country', $card->getShippingCountry());
             $shippingDetails->addChild('zip', $card->getShippingPostcode());
             $shippingDetails->addChild('phone', $card->getShippingPhone());
@@ -140,5 +148,10 @@ class AuthorizeRequest extends AbstractRequest
     protected function getBasicMode()
     {
         return self::MODE_AUTH;
+    }
+
+    private function needState(): bool
+    {
+        return \in_array($this->getParameter('billingCountry'), ['US', 'CA']);
     }
 }
