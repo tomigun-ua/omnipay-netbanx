@@ -95,93 +95,44 @@ class AuthorizeRequest extends AbstractRequest
 
             $billingDetails->addChild('cardPayMethod', 'WEB');
 
-            //Mandatory
+            //Mandatory zip
             $billingDetails->addChild('zip', $card->getBillingPostcode());
 
-            if (!empty($card->getBillingFirstName())) {
-                $billingDetails->addChild('firstName', $card->getBillingFirstName());
+            $billingDetails->addChild('firstName', $card->getBillingFirstName());
+            $billingDetails->addChild('lastName', $card->getBillingLastName());
+            $billingDetails->addChild('street', $card->getBillingAddress1());
+            $billingDetails->addChild('street2', $card->getBillingAddress2());
+            $billingDetails->addChild('city', $card->getBillingCity());
+
+            if ($this->needState()) {
+                $billingDetails->addChild('state', $card->getBillingState());
+            } else {
+                $billingDetails->addChild('region', $card->getBillingState());
             }
 
-            if (!empty($card->getBillingLastName())) {
-                $billingDetails->addChild('lastName', $card->getBillingLastName());
-            }
-
-            if (!empty($card->getBillingAddress1())) {
-                $billingDetails->addChild('street', $card->getBillingAddress1());
-            }
-
-            if (!empty($card->getBillingAddress2())) {
-                $billingDetails->addChild('street2', $card->getBillingAddress2());
-            }
-
-            if (!empty($card->getBillingCity())) {
-                $billingDetails->addChild('city', $card->getBillingCity());
-            }
-
-            if (!empty($card->getBillingState())) {
-                if ($this->needState()) {
-                    $billingDetails->addChild('state', $card->getBillingState());
-                } else {
-                    $billingDetails->addChild('region', $card->getBillingState());
-                }
-            }
-
-            if (!empty($card->getBillingCountry())) {
-                $billingDetails->addChild('country', $card->getBillingCountry());
-            }
-
-            if (!empty($card->getBillingPhone())) {
-                $billingDetails->addChild('phone', $card->getBillingPhone());
-            }
-
-            if (!empty($card->getEmail())) {
-                $billingDetails->addChild('email', $card->getEmail());
-            }
+            $billingDetails->addChild('country', $card->getBillingCountry());
+            $billingDetails->addChild('phone', $card->getBillingPhone());
+            $billingDetails->addChild('email', $card->getEmail());
 
             $shippingDetails = $sxml->addChild('shippingDetails');
 
-            if (!empty($card->getShippingFirstName())) {
-                $shippingDetails->addChild('firstName', $card->getShippingFirstName());
+            $shippingDetails->addChild('firstName', $card->getShippingFirstName());
+            $shippingDetails->addChild('lastName', $card->getShippingLastName());
+            $shippingDetails->addChild('street', $card->getShippingAddress1());
+            $shippingDetails->addChild('street2', $card->getShippingAddress2());
+            $shippingDetails->addChild('city', $card->getShippingCity());
+
+            if ($this->needState()) {
+                $shippingDetails->addChild('state', $card->getBillingState());
+            } else {
+                $shippingDetails->addChild('region', $card->getBillingState());
             }
 
-            if (!empty($card->getShippingLastName())) {
-                $shippingDetails->addChild('lastName', $card->getShippingLastName());
-            }
+            $shippingDetails->addChild('country', $card->getShippingCountry());
+            $shippingDetails->addChild('phone', $card->getShippingPhone());
+            $shippingDetails->addChild('email', $card->getEmail());
 
-            if (!empty($card->getShippingAddress1())) {
-                $shippingDetails->addChild('street', $card->getShippingAddress1());
-            }
-
-            if (!empty($card->getShippingAddress2())) {
-                $shippingDetails->addChild('street2', $card->getShippingAddress2());
-            }
-
-
-            if (!empty($card->getShippingCity())) {
-                $shippingDetails->addChild('city', $card->getShippingCity());
-            }
-
-            if (!empty($card->getBillingState())) {
-                if ($this->needState()) {
-                    $shippingDetails->addChild('state', $card->getBillingState());
-                } else {
-                    $shippingDetails->addChild('region', $card->getBillingState());
-                }
-            }
-
-            if (!empty($card->getShippingCountry())) {
-                $shippingDetails->addChild('country', $card->getShippingCountry());
-            }
-
-            if (!empty($card->getShippingPhone())) {
-                $shippingDetails->addChild('phone', $card->getShippingPhone());
-            }
-
-            if (!empty($card->getEmail())) {
-                $shippingDetails->addChild('email', $card->getEmail());
-            }
-
-            //Mandatory
+            //Mandatory zip
             $shippingDetails->addChild('zip', $card->getShippingPostcode());
         }
 
@@ -193,7 +144,8 @@ class AuthorizeRequest extends AbstractRequest
      *
      * @return string
      */
-    protected function getStoredDataMode()
+    protected
+    function getStoredDataMode()
     {
         return self::MODE_STORED_DATA_AUTH;
     }
@@ -203,12 +155,14 @@ class AuthorizeRequest extends AbstractRequest
      *
      * @return string
      */
-    protected function getBasicMode()
+    protected
+    function getBasicMode()
     {
         return self::MODE_AUTH;
     }
 
-    private function needState(): bool
+    private
+    function needState(): bool
     {
         return \in_array($this->getParameter('billingCountry'), ['US', 'CA']);
     }
